@@ -1,0 +1,29 @@
+// Pin connected to the turbidity sensor
+const int turbidityPin = A0;
+
+// Set a threshold to determine if the water is clear or turbid
+const int clearWaterThreshold = 600; // Adjustable based on calibration
+
+void setup() {
+  Serial.begin(9600); // Start serial communication
+}
+
+void loop() {
+  int sensorValue = analogRead(turbidityPin); // Read the sensor value
+  float voltage = sensorValue * (5.0 / 1023.0); // Convert analog reading to voltage
+  
+  Serial.print("Sensor Value: ");
+  Serial.print(sensorValue);
+  Serial.print(" | Voltage: ");
+  Serial.print(voltage, 2);
+  Serial.println(" V");
+  
+  // Check if the water is clear or turbid
+  if (sensorValue > clearWaterThreshold) {
+    Serial.println("The water is clear.");
+  } else {
+    Serial.println("The water is turbid.");
+  }
+  
+  delay(1000); // Wait for 1 second before the next reading
+}
